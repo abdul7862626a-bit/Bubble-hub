@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bubble Hub Melkbos</title>
+<style>
+  :root{
+    --primary:#a6308a;
+    --primary-dark:#7b1f66;
+    --accent:#ff6fb0;
+    --bg:#fff8fc;
+    --dark:#241229;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Poppins','Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+    line-height:1.65;
+  }
+  a{color:inherit;}
+
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 6%;
+    background:#fff;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    position:sticky;
+    top:0;
+    z-index:200;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:1.4rem;
+    font-weight:800;
+    color:var(--primary);
+    text-decoration:none;
+  }
+  .logo-badge{
+    width:44px;height:44px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  nav{display:flex;align-items:center;}
+  nav a{
+    margin-left:26px;
+    text-decoration:none;
+    color:var(--dark);
+    font-weight:600;
+    font-size:.95rem;
+    transition:color .2s;
+  }
+  nav a:hover{color:var(--accent);}
+  .nav-cta{
+    background:var(--primary);
+    color:#fff !important;
+    padding:9px 20px;
+    border-radius:30px;
+  }
+  .nav-cta:hover{background:var(--accent) !important;}
+  .burger{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+    cursor:pointer;
+    background:none;
+    border:none;
+    padding:6px;
+  }
+  .burger span{
+    width:26px;height:3px;
+    background:var(--primary);
+    border-radius:3px;
+    transition:transform .3s, opacity .3s;
+  }
+  .burger.open span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+  .burger.open span:nth-child(2){opacity:0;}
+  .burger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+
+  @media(max-width:860px){
+    .burger{display:flex;}
+    nav{
+      position:fixed;
+      top:70px;left:0;right:0;
+      background:#fff;
+      flex-direction:column;
+      align-items:flex-start;
+      padding:20px 6% 30px;
+      box-shadow:0 12px 20px rgba(0,0,0,0.1);
+      transform:translateY(-130%);
+      opacity:0;
+      transition:transform .35s ease, opacity .35s ease;
+      z-index:199;
+    }
+    nav.open{transform:translateY(0);opacity:1;}
+    nav a{margin:10px 0;width:100%;}
+    .nav-cta{display:inline-block;margin-top:10px !important;}
+  }
+
+  /* HERO */
+  .hero{
+    position:relative;
+    min-height:88vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#fff;
+    overflow:hidden;
+    background:linear-gradient(145deg,#3a0a2e 0%,#7b1f66 40%,#a6308a 70%,#ff6fb0 100%);
+  }
+  .hero-bubbles{
+    position:absolute;inset:0;pointer-events:none;overflow:hidden;
+  }
+  .hero-content{
+    max-width:680px;
+    padding:0 20px;
+    position:relative;z-index:2;
+    animation:fadeUp 1s ease;
+  }
+  .hero-content span.tag{
+    display:inline-block;
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.4);
+    padding:6px 16px;
+    border-radius:30px;
+    font-size:.8rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .hero-content h1{
+    font-size:clamp(2rem,5vw,3.2rem);
+    font-weight:800;
+    margin-bottom:16px;
+    text-shadow:0 4px 18px rgba(0,0,0,0.3);
+  }
+  .hero-content p{
+    font-size:1.1rem;
+    color:#f3e6f0;
+    margin-bottom:30px;
+  }
+  .hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;
+    padding:14px 30px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:700;
+    transition:transform .2s, box-shadow .2s, background .2s;
+  }
+  .btn-primary{
+    background:#fff;
+    color:var(--primary);
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  }
+  .btn-primary:hover{background:#ffe0f5;transform:translateY(-3px);}
+  .btn-outline{
+    border:2px solid #fff;
+    color:#fff;
+    background:transparent;
+  }
+  .btn-outline:hover{background:#fff;color:var(--primary);transform:translateY(-3px);}
+
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(30px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  section{padding:80px 6%;}
+  .section-tag{
+    text-align:center;
+    color:var(--accent);
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-size:.8rem;
+    margin-bottom:10px;
+  }
+  .section-title{
+    text-align:center;
+    font-size:2.2rem;
+    color:var(--primary-dark);
+    margin-bottom:18px;
+    font-weight:800;
+  }
+  .section-sub{
+    text-align:center;
+    max-width:640px;
+    margin:0 auto 50px;
+    color:#5a4660;
+  }
+
+  /* STORY */
+  .story{background:#fff;}
+  .story-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    align-items:center;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .story-illustration{
+    width:100%;
+    border-radius:20px;
+    overflow:hidden;
+  }
+  .story-text h2{
+    font-size:2rem;
+    color:var(--primary-dark);
+    margin-bottom:18px;
+    font-weight:800;
+  }
+  .story-text p{color:#5a4660;margin-bottom:16px;}
+  .story-points{list-style:none;margin-top:20px;}
+  .story-points li{margin-bottom:10px;font-weight:600;}
+  .story-points li span{margin-right:10px;}
+
+  @media(max-width:780px){.story-grid{grid-template-columns:1fr;}}
+
+  /* MENU SHOWCASE / HIGHLIGHTS */
+  .menu-showcase{background:linear-gradient(135deg,#fdeef7,#f3e6ff);}
+  .menu-flex{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:50px;
+    align-items:center;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .menu-list{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:24px;
+  }
+  .menu-item{
+    background:#fff;
+    padding:16px;
+    border-radius:14px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.08);
+    text-align:center;
+    font-weight:700;
+    color:var(--primary-dark);
+    font-size:.95rem;
+  }
+  @media(max-width:780px){.menu-flex{grid-template-columns:1fr;}}
+
+  /* FEATURES */
+  .features-section{background:#fff;}
+  .features{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;
+    text-align:center;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .feature-card{
+    background:var(--bg);
+    padding:34px 22px;
+    border-radius:18px;
+    transition:transform .25s, box-shadow .25s;
+  }
+  .feature-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 14px 30px rgba(166,48,138,0.15);
+  }
+  .feature-icon{font-size:2.4rem;margin-bottom:14px;}
+  .feature-card h3{color:var(--primary-dark);margin-bottom:8px;font-size:1.15rem;}
+  .feature-card p{color:#5a4660;font-size:.92rem;}
+
+  /* HIGHLIGHT CARDS */
+  .highlights-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:20px;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .highlight-card{
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 24px rgba(0,0,0,0.12);
+    position:relative;
+    background:var(--bg);
+    cursor:pointer;
+    transition:transform .25s;
+  }
+  .highlight-card:hover{transform:translateY(-4px);}
+  .highlight-card-visual{
+    width:100%;height:220px;
+    display:block;
+  }
+  .highlight-card-label{
+    position:absolute;bottom:0;left:0;right:0;
+    background:linear-gradient(0deg,rgba(36,18,41,0.78),transparent);
+    color:#fff;padding:14px;font-weight:700;
+    text-decoration:none;display:block;
+  }
+
+  /* COMMUNITY */
+  .community{
+    background:linear-gradient(135deg,#241229,#3a1538);
+    color:#fff;
+    text-align:center;
+  }
+  .community .section-title{color:#fff;}
+  .community .section-sub{color:#e6c9dc;}
+  .community-illustration{
+    max-width:480px;
+    margin:0 auto;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 16px 40px rgba(0,0,0,0.5);
+  }
+
+  .cta-strip{
+    background:var(--primary);
+    color:#fff;
+    text-align:center;
+    padding:60px 6%;
+  }
+  .cta-strip h2{font-size:1.8rem;margin-bottom:16px;}
+  .cta-strip p{margin-bottom:26px;color:#ffe1f1;}
+
+  footer{background:var(--dark);color:#fff;padding:50px 6% 30px;}
+  .footer-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:30px;
+    max-width:1100px;
+    margin:0 auto 30px;
+  }
+  .footer-grid h4{color:var(--accent);margin-bottom:14px;font-size:1rem;}
+  .footer-grid p, .footer-grid a{
+    color:#d8c3d3;
+    text-decoration:none;
+    font-size:.92rem;
+    display:block;
+    margin-bottom:8px;
+  }
+  .footer-icons a{
+    display:inline-block;
+    margin-right:14px;
+    font-size:1.4rem;
+    text-decoration:none;
+  }
+  .footer-bottom{
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,0.1);
+    padding-top:20px;
+    font-size:.85rem;
+    color:#a78fa1;
+  }
+
+  .float-wa{
+    position:fixed;
+    bottom:24px;
+    right:24px;
+    background:#25D366;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.6rem;
+    color:#fff;
+    text-decoration:none;
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+    z-index:300;
+    animation:pulse 2.2s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(37,211,102,0.5);}
+    70%{box-shadow:0 0 0 14px rgba(37,211,102,0);}
+    100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html">
+    <!-- B Logo SVG recreation -->
+    <div class="logo-badge">
+      <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="bgG" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#e85cb0"/>
+            <stop offset="100%" stop-color="#c0328a"/>
+          </radialGradient>
+          <radialGradient id="bG" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#b060d0"/>
+            <stop offset="60%" stop-color="#7b1f66"/>
+            <stop offset="100%" stop-color="#4a1040"/>
+          </radialGradient>
+        </defs>
+        <rect width="44" height="44" rx="10" fill="url(#bgG)"/>
+        <!-- b letter -->
+        <text x="8" y="34" font-family="Georgia,serif" font-size="30" font-weight="900" fill="url(#bG)">b</text>
+        <!-- coloured bubbles -->
+        <circle cx="32" cy="10" r="4" fill="#f7c948" opacity=".95"/>
+        <circle cx="38" cy="20" r="3" fill="#4ecb71" opacity=".95"/>
+        <circle cx="34" cy="30" r="3.5" fill="#e84040" opacity=".9"/>
+        <circle cx="26" cy="8"  r="2.5" fill="#a0d0f0" opacity=".9"/>
+      </svg>
+    </div>
+    The Bubble Hub
+  </a>
+  <button class="burger" id="burgerBtn" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <nav id="navLinks">
+    <a href="#story">Our Story</a>
+    <a href="menu.html">Menu</a>
+    <a href="#contact">Contact</a>
+    <a class="nav-cta" href="https://wa.me/27734449407">Order on WhatsApp</a>
+  </nav>
+</header>
+
+<!-- HERO SECTION with SVG illustration (no external images) -->
+<section class="hero">
+  <div class="hero-bubbles">
+    <svg width="100%" height="100%" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <!-- Floating decorative bubbles background -->
+      <circle cx="80"  cy="120" r="60"  fill="rgba(255,255,255,0.06)"/>
+      <circle cx="200" cy="400" r="90"  fill="rgba(255,255,255,0.04)"/>
+      <circle cx="1100" cy="80"  r="80"  fill="rgba(255,255,255,0.07)"/>
+      <circle cx="1050" cy="500" r="110" fill="rgba(255,255,255,0.05)"/>
+      <circle cx="600" cy="600" r="70"  fill="rgba(255,255,255,0.04)"/>
+      <circle cx="350" cy="60"  r="40"  fill="rgba(255,255,255,0.08)"/>
+      <circle cx="900" cy="300" r="55"  fill="rgba(255,255,255,0.05)"/>
+      <!-- Colourful accent bubbles -->
+      <circle cx="140" cy="550" r="28" fill="#ffd166" opacity="0.55"/>
+      <circle cx="1060" cy="160" r="22" fill="#06d6a0" opacity="0.5"/>
+      <circle cx="980" cy="620" r="18" fill="#ff6fb0" opacity="0.6"/>
+      <circle cx="260" cy="200" r="16" fill="#a0e0ff" opacity="0.45"/>
+      <circle cx="700" cy="80"  r="20" fill="#f7c948" opacity="0.5"/>
+      <circle cx="420" cy="650" r="24" fill="#c084fc" opacity="0.45"/>
+      <!-- Big decorative drink cup on right side -->
+      <g transform="translate(870,140)">
+        <!-- Cup body -->
+        <path d="M30 20 L50 200 L110 200 L130 20 Z" fill="rgba(255,255,255,0.12)" rx="8"/>
+        <!-- Cup rim -->
+        <rect x="22" y="12" width="116" height="14" rx="7" fill="rgba(255,255,255,0.2)"/>
+        <!-- Straw -->
+        <rect x="78" y="-30" width="8" height="80" rx="4" fill="rgba(255,255,255,0.35)"/>
+        <!-- Liquid fill -->
+        <path d="M32 60 L48 200 L112 200 L128 60 Z" fill="rgba(255,111,176,0.25)"/>
+        <!-- Bubbles in drink -->
+        <circle cx="60"  cy="140" r="12" fill="rgba(255,209,102,0.5)"/>
+        <circle cx="90"  cy="120" r="10" fill="rgba(160,224,255,0.5)"/>
+        <circle cx="110" cy="155" r="8"  fill="rgba(6,214,160,0.5)"/>
+        <circle cx="50"  cy="170" r="7"  fill="rgba(192,132,252,0.5)"/>
+        <!-- Whipped cream -->
+        <ellipse cx="80" cy="18" rx="40" ry="14" fill="rgba(255,255,255,0.4)"/>
+        <ellipse cx="65" cy="10" rx="20" ry="10" fill="rgba(255,255,255,0.35)"/>
+        <ellipse cx="95" cy="10" rx="20" ry="10" fill="rgba(255,255,255,0.35)"/>
+      </g>
+      <!-- Waffle decoration on left -->
+      <g transform="translate(80,350)">
+        <rect x="0" y="0" width="100" height="100" rx="12" fill="rgba(255,209,102,0.2)"/>
+        <line x1="0" y1="25" x2="100" y2="25" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+        <line x1="0" y1="50" x2="100" y2="50" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+        <line x1="0" y1="75" x2="100" y2="75" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+        <line x1="25" y1="0" x2="25" y2="100" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+        <line x1="50" y1="0" x2="50" y2="100" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+        <line x1="75" y1="0" x2="75" y2="100" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <span class="tag">Melkbosstrand, Cape Town</span>
+    <h1>Welcome to The Bubble Hub Melkbos</h1>
+    <p>A cozy café where delicious bubble tea, waffles, coffee, ice cream and sweet memories come together — right by the sea.</p>
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="menu.html">Explore Menu</a>
+      <a class="btn btn-outline" href="https://wa.me/27734449407">WhatsApp Order</a>
+    </div>
+  </div>
+</section>
+
+<!-- STORY SECTION -->
+<section class="story" id="story">
+  <p class="section-tag">Who we are</p>
+  <h2 class="section-title">Our Story</h2>
+  <div class="story-grid">
+    <!-- SVG Illustration instead of external image -->
+    <div class="story-illustration">
+      <svg viewBox="0 0 420 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:20px;box-shadow:0 12px 30px rgba(0,0,0,0.18);">
+        <defs>
+          <radialGradient id="storyBg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fdeef7"/>
+            <stop offset="100%" stop-color="#f3d6ef"/>
+          </radialGradient>
+          <radialGradient id="cupGrad" cx="35%" cy="25%" r="65%">
+            <stop offset="0%" stop-color="#ff9fd4"/>
+            <stop offset="100%" stop-color="#a6308a"/>
+          </radialGradient>
+        </defs>
+        <rect width="420" height="340" fill="url(#storyBg)"/>
+        <!-- Table surface -->
+        <ellipse cx="210" cy="310" rx="170" ry="20" fill="#e8c8df" opacity="0.6"/>
+        <!-- Main bubble tea cup -->
+        <g transform="translate(130,60)">
+          <!-- Cup -->
+          <path d="M20 20 L35 240 L125 240 L140 20 Z" fill="url(#cupGrad)" rx="6"/>
+          <rect x="12" y="10" width="136" height="16" rx="8" fill="#ff6fb0"/>
+          <!-- Liquid -->
+          <path d="M22 60 L36 240 L124 240 L138 60 Z" fill="rgba(255,111,176,0.35)"/>
+          <!-- Tapioca pearls at bottom -->
+          <circle cx="55" cy="210" r="10" fill="#7b1f66"/>
+          <circle cx="80" cy="220" r="10" fill="#5a1250"/>
+          <circle cx="105" cy="210" r="10" fill="#7b1f66"/>
+          <circle cx="68" cy="228" r="10" fill="#5a1250"/>
+          <circle cx="93" cy="228" r="10" fill="#7b1f66"/>
+          <!-- Colourful popping bubbles (floating mid-cup) -->
+          <circle cx="55"  cy="140" r="14" fill="#ffd166" opacity="0.85"/>
+          <circle cx="90"  cy="120" r="12" fill="#06d6a0" opacity="0.85"/>
+          <circle cx="115" cy="150" r="11" fill="#ff6fb0" opacity="0.85"/>
+          <circle cx="45"  cy="170" r="10" fill="#a0d0ff" opacity="0.85"/>
+          <circle cx="110" cy="100" r="9"  fill="#c084fc" opacity="0.85"/>
+          <!-- Straw -->
+          <rect x="86" y="-50" width="10" height="100" rx="5" fill="rgba(255,255,255,0.7)"/>
+          <rect x="86" y="-50" width="10" height="30"  rx="5" fill="rgba(255,111,176,0.6)"/>
+          <!-- Whipped cream -->
+          <ellipse cx="80" cy="16" rx="46" ry="16" fill="rgba(255,255,255,0.9)"/>
+          <ellipse cx="62" cy="8"  rx="24" ry="13" fill="rgba(255,255,255,0.85)"/>
+          <ellipse cx="98" cy="8"  rx="24" ry="13" fill="rgba(255,255,255,0.85)"/>
+        </g>
+        <!-- Floating small bubbles around cup -->
+        <circle cx="100" cy="80"  r="12" fill="#ffd166" opacity="0.7"/>
+        <circle cx="340" cy="100" r="14" fill="#06d6a0" opacity="0.65"/>
+        <circle cx="360" cy="200" r="10" fill="#ff6fb0" opacity="0.7"/>
+        <circle cx="80"  cy="220" r="9"  fill="#c084fc" opacity="0.6"/>
+        <circle cx="350" cy="280" r="12" fill="#ffd166" opacity="0.6"/>
+        <circle cx="120" cy="300" r="8"  fill="#a0d0ff" opacity="0.65"/>
+        <!-- Brand text at bottom -->
+        <text x="210" y="300" font-family="Poppins,sans-serif" font-size="13" font-weight="700" fill="#7b1f66" text-anchor="middle">Made Fresh, Every Day 💗</text>
+      </svg>
+    </div>
+    <div class="story-text">
+      <h2>Made with love, served with a smile</h2>
+      <p>The Bubble Hub Melkbos is a cozy café created for people who love unique drinks, desserts and relaxing moments. From refreshing bubble teas to handmade waffles, creamy milkshakes and tasty snacks, every item is made to bring happiness.</p>
+      <p>Our friendly team prepares everything fresh in-house, daily — because good vibes start with good food.</p>
+      <ul class="story-points">
+        <li><span>🧋</span> Freshly brewed bubble tea, every order</li>
+        <li><span>🧇</span> Hand-made waffles & desserts</li>
+        <li><span>💗</span> A cozy spot for friends & family</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MENU HIGHLIGHTS SECTION -->
+<section class="menu-showcase" id="menu">
+  <p class="section-tag">What we serve</p>
+  <h2 class="section-title">Our Menu Highlights</h2>
+  <p class="section-sub">Sweet treats and refreshing drinks for every mood.</p>
+  <div class="menu-flex">
+    <!-- SVG menu illustration -->
+    <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:20px;box-shadow:0 12px 30px rgba(0,0,0,0.15);">
+      <defs>
+        <linearGradient id="menuBg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fdeef7"/>
+          <stop offset="100%" stop-color="#ede0ff"/>
+        </linearGradient>
+      </defs>
+      <rect width="400" height="320" fill="url(#menuBg)"/>
+      <!-- 3 drink cups side by side -->
+      <!-- Cup 1 - pink -->
+      <g transform="translate(30,40)">
+        <path d="M10 10 L20 190 L80 190 L90 10 Z" fill="#ff9fd4"/>
+        <rect x="4" y="4" width="92" height="12" rx="6" fill="#ff6fb0"/>
+        <path d="M12 40 L21 190 L79 190 L88 40 Z" fill="rgba(255,111,176,0.3)"/>
+        <circle cx="35" cy="110" r="9" fill="#ffd166" opacity="0.9"/>
+        <circle cx="55" cy="95"  r="9" fill="#06d6a0" opacity="0.9"/>
+        <circle cx="68" cy="120" r="8" fill="#c084fc" opacity="0.9"/>
+        <circle cx="30" cy="140" r="7" fill="#a0d0ff" opacity="0.9"/>
+        <rect x="44" y="-30" width="7" height="46" rx="3.5" fill="rgba(255,255,255,0.7)"/>
+        <ellipse cx="50" cy="8" rx="34" ry="10" fill="rgba(255,255,255,0.85)"/>
+      </g>
+      <!-- Cup 2 - purple (taller, centre) -->
+      <g transform="translate(150,20)">
+        <path d="M10 10 L22 210 L88 210 L100 10 Z" fill="#c084fc"/>
+        <rect x="4" y="4" width="102" height="13" rx="6" fill="#a6308a"/>
+        <path d="M12 45 L23 210 L87 210 L98 45 Z" fill="rgba(166,48,138,0.25)"/>
+        <circle cx="38" cy="130" r="10" fill="#ff6fb0" opacity="0.9"/>
+        <circle cx="62" cy="110" r="10" fill="#ffd166" opacity="0.9"/>
+        <circle cx="78" cy="145" r="9"  fill="#06d6a0" opacity="0.9"/>
+        <circle cx="32" cy="160" r="8"  fill="#a0d0ff" opacity="0.9"/>
+        <circle cx="72" cy="80"  r="8"  fill="#ff9fd4" opacity="0.9"/>
+        <rect x="48" y="-40" width="7" height="56" rx="3.5" fill="rgba(255,255,255,0.75)"/>
+        <ellipse cx="55" cy="8" rx="38" ry="11" fill="rgba(255,255,255,0.85)"/>
+        <ellipse cx="40" cy="0" rx="20" ry="10" fill="rgba(255,255,255,0.8)"/>
+        <ellipse cx="70" cy="0" rx="20" ry="10" fill="rgba(255,255,255,0.8)"/>
+      </g>
+      <!-- Cup 3 - teal/green -->
+      <g transform="translate(290,50)">
+        <path d="M10 10 L20 180 L80 180 L90 10 Z" fill="#06d6a0"/>
+        <rect x="4" y="4" width="92" height="12" rx="6" fill="#04b386"/>
+        <path d="M12 40 L21 180 L79 180 L88 40 Z" fill="rgba(6,214,160,0.25)"/>
+        <circle cx="35" cy="100" r="9" fill="#ffd166" opacity="0.9"/>
+        <circle cx="58" cy="120" r="9" fill="#ff6fb0" opacity="0.9"/>
+        <circle cx="72" cy="95"  r="8" fill="#c084fc" opacity="0.9"/>
+        <rect x="44" y="-28" width="7" height="44" rx="3.5" fill="rgba(255,255,255,0.7)"/>
+        <ellipse cx="50" cy="8" rx="34" ry="10" fill="rgba(255,255,255,0.85)"/>
+      </g>
+      <!-- Waffle at bottom left -->
+      <g transform="translate(20,230)">
+        <rect x="0" y="0" width="70" height="70" rx="10" fill="#ffd166" opacity="0.85"/>
+        <line x1="0" y1="17" x2="70" y2="17" stroke="#fff" stroke-width="1.5" opacity="0.6"/>
+        <line x1="0" y1="35" x2="70" y2="35" stroke="#fff" stroke-width="1.5" opacity="0.6"/>
+        <line x1="0" y1="52" x2="70" y2="52" stroke="#fff" stroke-width="1.5" opacity="0.6"/>
+        <line x1="17" y1="0" x2="17" y2="70" stroke="#fff" stroke-width="1.5" opacity="0.6"/>
+        <line x1="35" y1="0" x2="35" y2="70" stroke="#fff" stroke-width="1.5" opacity="0.6"/>
+        <line x1="52" y1="0" x2="52" y2="70" stroke="#fff" stroke-width="1.5" opacity="0.6"/>
+        <circle cx="8"  cy="58" r="5" fill="#ff6fb0"/>
+        <circle cx="24" cy="62" r="4" fill="#ff6fb0"/>
+        <circle cx="16" cy="54" r="3" fill="#ff9fd4"/>
+      </g>
+      <!-- Ice cream on right bottom -->
+      <g transform="translate(300,220)">
+        <path d="M40 100 L15 60 L65 60 Z" fill="#ffd166"/>
+        <circle cx="25" cy="50" r="22" fill="#ff9fd4"/>
+        <circle cx="50" cy="45" r="22" fill="#c084fc"/>
+        <circle cx="38" cy="28" r="20" fill="#ffd166"/>
+      </g>
+      <!-- Label -->
+      <text x="200" y="300" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#7b1f66" text-anchor="middle" opacity="0.8">Freshly Made · Every Order 🧋</text>
+    </svg>
+    <div>
+      <div class="menu-list">
+        <div class="menu-item">🧋 Bubble Tea</div>
+        <div class="menu-item">🧇 Waffles</div>
+        <div class="menu-item">☕ Cappuccino</div>
+        <div class="menu-item">🍫 Brownies</div>
+        <div class="menu-item">🥤 Milkshakes</div>
+        <div class="menu-item">🍿 Popcorn</div>
+        <div class="menu-item">🍡 Candy Floss</div>
+        <div class="menu-item">🍮 Pistachio Latte</div>
+      </div>
+      <div style="margin-top:26px;display:flex;gap:14px;flex-wrap:wrap;">
+        <a class="btn btn-primary" href="menu.html">View Full Menu</a>
+        <a class="btn btn-outline" style="border-color:var(--primary);color:var(--primary);" href="https://wa.me/27734449407">Order Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES / OUR FAVORITES -->
+<section class="features-section">
+  <p class="section-tag">Why visit us</p>
+  <h2 class="section-title">Our Favorites</h2>
+  <p class="section-sub">Quality, variety and a place that feels like home.</p>
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">🍓</div>
+      <h3>Fresh Flavours</h3>
+      <p>Quality drinks and desserts made fresh, every single day.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧋</div>
+      <h3>Huge Variety</h3>
+      <p>Bubble tea, coffee, waffles, milkshakes, popcorn & more.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💗</div>
+      <h3>Friendly Place</h3>
+      <p>A warm, welcoming spot perfect for friends and family.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TASTE HIGHLIGHTS (replaces external photo cards) -->
+<section style="padding-top:0;">
+  <p class="section-tag">Fan favourites</p>
+  <h2 class="section-title">A Taste of What's Inside</h2>
+  <p class="section-sub">A little preview of the good stuff — see the full menu for prices and flavours.</p>
+  <div class="highlights-grid">
+    <!-- Waffle card -->
+    <a href="menu.html" class="highlight-card" style="text-decoration:none;">
+      <svg class="highlight-card-visual" viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="waffleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fdebc8"/>
+            <stop offset="100%" stop-color="#f5c542"/>
+          </linearGradient>
+        </defs>
+        <rect width="300" height="220" fill="url(#waffleGrad)"/>
+        <!-- Waffle grid -->
+        <g transform="translate(70,30)">
+          <rect x="0" y="0" width="160" height="160" rx="14" fill="#f5a623"/>
+          <rect x="10" y="10" width="140" height="140" rx="10" fill="#ffd166"/>
+          <!-- Grid lines -->
+          <line x1="10" y1="50"  x2="150" y2="50"  stroke="#f5a623" stroke-width="2.5"/>
+          <line x1="10" y1="90"  x2="150" y2="90"  stroke="#f5a623" stroke-width="2.5"/>
+          <line x1="10" y1="130" x2="150" y2="130" stroke="#f5a623" stroke-width="2.5"/>
+          <line x1="50"  y1="10" x2="50"  y2="150" stroke="#f5a623" stroke-width="2.5"/>
+          <line x1="90"  y1="10" x2="90"  y2="150" stroke="#f5a623" stroke-width="2.5"/>
+          <line x1="130" y1="10" x2="130" y2="150" stroke="#f5a623" stroke-width="2.5"/>
+          <!-- Strawberries on top -->
+          <ellipse cx="40"  cy="8" rx="12" ry="10" fill="#e03030"/>
+          <ellipse cx="70"  cy="4" rx="13" ry="11" fill="#e84040"/>
+          <ellipse cx="100" cy="8" rx="11" ry="9"  fill="#e03030"/>
+          <ellipse cx="130" cy="4" rx="12" ry="10" fill="#e84040"/>
+          <!-- Cream -->
+          <ellipse cx="80" cy="2" rx="50" ry="10" fill="rgba(255,255,255,0.85)"/>
+          <!-- Icing sugar dust -->
+          <circle cx="30"  cy="30"  r="2" fill="rgba(255,255,255,0.7)"/>
+          <circle cx="110" cy="55"  r="2" fill="rgba(255,255,255,0.7)"/>
+          <circle cx="55"  cy="70"  r="2" fill="rgba(255,255,255,0.7)"/>
+          <circle cx="140" cy="80"  r="2" fill="rgba(255,255,255,0.7)"/>
+          <circle cx="20"  cy="100" r="2" fill="rgba(255,255,255,0.7)"/>
+        </g>
+      </svg>
+      <span class="highlight-card-label">🧇 Waffles</span>
+    </a>
+    <!-- Ice cream card -->
+    <a href="menu.html" class="highlight-card" style="text-decoration:none;">
+      <svg class="highlight-card-visual" viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="iceBg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fdeef7"/>
+            <stop offset="100%" stop-color="#ffe4f5"/>
+          </linearGradient>
+        </defs>
+        <rect width="300" height="220" fill="url(#iceBg)"/>
+        <!-- Ice cream scoops -->
+        <g transform="translate(80,20)">
+          <!-- Cone -->
+          <path d="M70 160 L30 270 L110 270 Z" fill="#f5a623"/>
+          <line x1="70" y1="160" x2="50" y2="220" stroke="#e8941a" stroke-width="1.5"/>
+          <line x1="70" y1="160" x2="90" y2="220" stroke="#e8941a" stroke-width="1.5"/>
+          <line x1="40" y1="190" x2="100" y2="190" stroke="#e8941a" stroke-width="1.5"/>
+          <!-- 3 scoops -->
+          <circle cx="50" cy="138" r="38" fill="#ff9fd4"/>
+          <circle cx="90" cy="128" r="38" fill="#c084fc"/>
+          <circle cx="70" cy="100" r="36" fill="#ffd166"/>
+          <!-- Highlights -->
+          <circle cx="40" cy="122" r="10" fill="rgba(255,255,255,0.4)"/>
+          <circle cx="80" cy="112" r="10" fill="rgba(255,255,255,0.35)"/>
+          <circle cx="62" cy="88"  r="9"  fill="rgba(255,255,255,0.4)"/>
+          <!-- Cherry on top -->
+          <circle cx="70" cy="66" r="10" fill="#e03030"/>
+          <line x1="70" y1="56" x2="75" y2="46" stroke="#4a7c30" stroke-width="2"/>
+        </g>
+        <!-- Sprinkles -->
+        <rect x="40"  y="40"  width="8" height="3" rx="1.5" fill="#ff6fb0" transform="rotate(30 44 41)"/>
+        <rect x="240" y="60"  width="8" height="3" rx="1.5" fill="#ffd166" transform="rotate(-20 244 61)"/>
+        <rect x="50"  y="170" width="8" height="3" rx="1.5" fill="#06d6a0" transform="rotate(10 54 171)"/>
+        <rect x="230" y="180" width="8" height="3" rx="1.5" fill="#c084fc" transform="rotate(-35 234 181)"/>
+      </svg>
+      <span class="highlight-card-label">🍦 Ice Cream</span>
+    </a>
+    <!-- Coffee card -->
+    <a href="menu.html" class="highlight-card" style="text-decoration:none;">
+      <svg class="highlight-card-visual" viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="coffeeBg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f8e8d4"/>
+            <stop offset="100%" stop-color="#f0d0b0"/>
+          </linearGradient>
+          <radialGradient id="coffeeIn" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c68642"/>
+            <stop offset="100%" stop-color="#7b4a1e"/>
+          </radialGradient>
+        </defs>
+        <rect width="300" height="220" fill="url(#coffeeBg)"/>
+        <!-- Saucer -->
+        <ellipse cx="150" cy="188" rx="90" ry="16" fill="#d4a96a"/>
+        <!-- Cup -->
+        <path d="M80 100 Q78 180 150 185 Q222 180 220 100 Z" fill="white"/>
+        <path d="M80 100 Q82 104 150 106 Q218 104 220 100 Q218 96 150 94 Q82 96 80 100 Z" fill="#e8d8c8"/>
+        <!-- Coffee inside -->
+        <ellipse cx="150" cy="106" rx="60" ry="12" fill="url(#coffeeIn)"/>
+        <!-- Latte art heart -->
+        <path d="M135 108 Q135 100 142 100 Q150 100 150 108 Q150 100 158 100 Q165 100 165 108 Q165 116 150 124 Q135 116 135 108 Z" fill="rgba(255,255,255,0.45)"/>
+        <!-- Cup handle -->
+        <path d="M220 120 Q248 120 248 150 Q248 180 220 180" stroke="white" stroke-width="14" fill="none" stroke-linecap="round"/>
+        <!-- Steam -->
+        <path d="M130 90 Q126 76 132 62" stroke="rgba(150,100,60,0.4)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M150 86 Q146 70 152 54" stroke="rgba(150,100,60,0.4)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M170 90 Q166 76 172 62" stroke="rgba(150,100,60,0.4)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Coffee beans decoration -->
+        <ellipse cx="50"  cy="60"  rx="14" ry="9"  fill="#7b4a1e" transform="rotate(-20 50 60)"/>
+        <line x1="50" y1="51" x2="50" y2="69" stroke="#5a3010" stroke-width="1.5" transform="rotate(-20 50 60)"/>
+        <ellipse cx="250" cy="150" rx="13" ry="8" fill="#7b4a1e" transform="rotate(15 250 150)"/>
+        <line x1="250" y1="142" x2="250" y2="158" stroke="#5a3010" stroke-width="1.5" transform="rotate(15 250 150)"/>
+      </svg>
+      <span class="highlight-card-label">☕ Coffee & Lattes</span>
+    </a>
+  </div>
+  <div style="text-align:center;margin-top:30px;">
+    <a class="btn btn-primary" href="menu.html">See the Full Menu</a>
+  </div>
+</section>
+
+<!-- COMMUNITY SECTION -->
+<section class="community">
+  <p class="section-tag">Our Community</p>
+  <h2 class="section-title">More Than Just a Café</h2>
+  <p class="section-sub">We love celebrating our team and our customers — every scoop, every smile.</p>
+  <div class="community-illustration">
+    <svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+      <defs>
+        <linearGradient id="commBg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#3a1538"/>
+          <stop offset="100%" stop-color="#5e1f54"/>
+        </linearGradient>
+      </defs>
+      <rect width="480" height="280" fill="url(#commBg)"/>
+      <!-- Table -->
+      <rect x="60" y="180" width="360" height="12" rx="6" fill="rgba(255,255,255,0.12)"/>
+      <!-- 3 people seated (simple silhouettes) -->
+      <!-- Person 1 left -->
+      <circle cx="120" cy="130" r="28" fill="rgba(255,111,176,0.35)"/>
+      <path d="M90 170 Q90 200 150 200 Q150 180 120 176 Z" fill="rgba(255,111,176,0.25)"/>
+      <!-- Their drink -->
+      <rect x="108" y="148" width="24" height="36" rx="6" fill="rgba(255,209,102,0.5)"/>
+      <rect x="104" y="144" width="32" height="8" rx="4" fill="rgba(255,209,102,0.7)"/>
+      <!-- Person 2 centre -->
+      <circle cx="240" cy="118" r="32" fill="rgba(192,132,252,0.35)"/>
+      <path d="M206 164 Q206 200 274 200 Q274 178 240 173 Z" fill="rgba(192,132,252,0.25)"/>
+      <!-- Their drink -->
+      <rect x="226" y="148" width="28" height="40" rx="7" fill="rgba(255,111,176,0.55)"/>
+      <rect x="222" y="144" width="36" height="9" rx="4.5" fill="rgba(255,111,176,0.7)"/>
+      <rect x="237" y="118" width="6" height="36" rx="3" fill="rgba(255,255,255,0.5)"/>
+      <!-- Person 3 right -->
+      <circle cx="360" cy="130" r="28" fill="rgba(6,214,160,0.35)"/>
+      <path d="M330 170 Q330 200 390 200 Q390 180 360 176 Z" fill="rgba(6,214,160,0.25)"/>
+      <!-- Their drink -->
+      <rect x="348" y="150" width="24" height="34" rx="6" fill="rgba(160,208,255,0.5)"/>
+      <rect x="344" y="146" width="32" height="8" rx="4" fill="rgba(160,208,255,0.7)"/>
+      <!-- Floating bubbles -->
+      <circle cx="80"  cy="60"  r="14" fill="#ffd166" opacity="0.4"/>
+      <circle cx="420" cy="40"  r="18" fill="#ff6fb0" opacity="0.35"/>
+      <circle cx="400" cy="240" r="12" fill="#06d6a0" opacity="0.4"/>
+      <circle cx="40"  cy="220" r="10" fill="#c084fc" opacity="0.4"/>
+      <circle cx="200" cy="40"  r="10" fill="#a0d0ff" opacity="0.4"/>
+      <!-- Heart emojis floating -->
+      <text x="160" y="80"  font-size="18" opacity="0.5" fill="#ff6fb0">💗</text>
+      <text x="300" y="90"  font-size="16" opacity="0.45" fill="#ffd166">⭐</text>
+      <text x="60"  cy="100" font-size="15" opacity="0.45" fill="#06d6a0">✨</text>
+      <!-- Brand text -->
+      <text x="240" y="255" font-family="Poppins,sans-serif" font-size="13" font-weight="700" fill="rgba(255,255,255,0.6)" text-anchor="middle">The Bubble Hub Community 💗</text>
+    </svg>
+  </div>
+</section>
+
+<section class="cta-strip" id="contact">
+  <h2>Craving something sweet?</h2>
+  <p>Order ahead on WhatsApp or visit us in Melkbosstrand today.</p>
+  <a class="btn btn-outline" href="https://wa.me/27734449407">Message Us on WhatsApp</a>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>The Bubble Hub Melkbos</h4>
+      <p>A cozy café for bubble tea, waffles, coffee, ice cream and sweet memories.</p>
+    </div>
+    <div>
+      <h4>Visit Us</h4>
+      <p>📍 #8 on 6th Avenue, Melkbosstrand, Cape Town</p>
+      <p>✉️ info@thebubblehub.co.za</p>
+      <p>📱 073 444 9407</p>
+    </div>
+    <div>
+      <h4>Follow Us</h4>
+      <div class="footer-icons">
+        <a href="https://www.facebook.com" title="Facebook">📘</a>
+        <a href="https://www.instagram.com" title="Instagram">📷</a>
+        <a href="https://www.tiktok.com" title="TikTok">🎵</a>
+        <a href="https://wa.me/27734449407" title="WhatsApp">📱</a>
+        <a href="tel:+27734449407" title="Call">📞</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    The Bubble Hub Melkbos © 2026 — All rights reserved.
+  </div>
+</footer>
+
+<a class="float-wa" href="https://wa.me/27734449407" title="Chat on WhatsApp">📱</a>
+
+<script>
+  const burger = document.getElementById('burgerBtn');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    burger.classList.remove('open');
+    navLinks.classList.remove('open');
+  }));
+</script>
+
+</body>
+</html>
+HTMLEOF
+echo "index.html written"
