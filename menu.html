@@ -23,7 +23,6 @@
   }
   a{color:inherit;}
 
-  /* HEADER */
   header{
     display:flex;
     justify-content:space-between;
@@ -112,21 +111,29 @@
     .nav-cta{display:inline-block;margin-top:10px !important;}
   }
 
-  /* PAGE HERO — SVG background, no external URL */
+  /* PAGE HERO — real staff photo background */
   .page-hero{
     text-align:center;
-    padding:80px 6% 40px;
+    padding:100px 6% 60px;
     position:relative;
     overflow:hidden;
-    background:linear-gradient(135deg,#fdeef7,#f3e6ff);
+    color:#fff;
   }
-  .page-hero-bg{
-    position:absolute;inset:0;pointer-events:none;z-index:0;
+  .page-hero-bg-img{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    z-index:0;
   }
-  .page-hero > *:not(.page-hero-bg){position:relative;z-index:1;}
+  .page-hero-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(135deg,rgba(58,10,46,0.72),rgba(166,48,138,0.55));
+    z-index:1;
+  }
+  .page-hero > *:not(.page-hero-bg-img):not(.page-hero-overlay){position:relative;z-index:2;}
   .page-hero span.tag{
     display:inline-block;
-    color:var(--accent);
+    color:#ffe0f0;
     font-weight:700;
     letter-spacing:2px;
     text-transform:uppercase;
@@ -135,17 +142,18 @@
   }
   .page-hero h1{
     font-size:clamp(1.8rem,4vw,2.6rem);
-    color:var(--primary-dark);
+    color:#fff;
     font-weight:800;
     margin-bottom:14px;
+    text-shadow:0 4px 18px rgba(0,0,0,0.3);
   }
   .page-hero p{
     max-width:560px;
     margin:0 auto;
-    color:#5a4660;
+    color:#fdeef7;
   }
 
-  /* Section visual strip (SVG, replaces photos) */
+  /* Section visual strip (SVG) */
   .section-visual{
     width:100%;
     max-width:1000px;
@@ -388,35 +396,10 @@
   </nav>
 </header>
 
-<!-- MENU PAGE HERO — SVG background, no external image -->
+<!-- MENU PAGE HERO — real staff photo -->
 <section class="page-hero">
-  <div class="page-hero-bg">
-    <svg width="100%" height="100%" viewBox="0 0 1200 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <!-- Decorative floating bubbles -->
-      <circle cx="60"   cy="50"  r="40" fill="rgba(166,48,138,0.08)"/>
-      <circle cx="200"  cy="220" r="60" fill="rgba(255,111,176,0.07)"/>
-      <circle cx="1100" cy="40"  r="50" fill="rgba(166,48,138,0.08)"/>
-      <circle cx="1050" cy="220" r="70" fill="rgba(255,111,176,0.06)"/>
-      <circle cx="600"  cy="10"  r="30" fill="rgba(192,132,252,0.07)"/>
-      <!-- Colourful accent dots -->
-      <circle cx="120"  cy="200" r="16" fill="#ffd166" opacity="0.3"/>
-      <circle cx="1080" cy="100" r="14" fill="#06d6a0" opacity="0.3"/>
-      <circle cx="900"  cy="240" r="12" fill="#ff6fb0" opacity="0.3"/>
-      <circle cx="300"  cy="30"  r="10" fill="#a0d0ff" opacity="0.3"/>
-      <circle cx="700"  cy="230" r="14" fill="#c084fc" opacity="0.28"/>
-      <!-- Mini bubble tea silhouettes on sides -->
-      <g transform="translate(20,60)" opacity="0.18">
-        <rect x="0" y="0" width="50" height="130" rx="8" fill="#a6308a"/>
-        <rect x="-4" y="-6" width="58" height="14" rx="7" fill="#ff6fb0"/>
-        <rect x="22" y="-36" width="6" height="40" rx="3" fill="#ff6fb0"/>
-      </g>
-      <g transform="translate(1130,40)" opacity="0.18">
-        <rect x="0" y="0" width="50" height="130" rx="8" fill="#a6308a"/>
-        <rect x="-4" y="-6" width="58" height="14" rx="7" fill="#ff6fb0"/>
-        <rect x="22" y="-36" width="6" height="40" rx="3" fill="#ff6fb0"/>
-      </g>
-    </svg>
-  </div>
+  <img class="page-hero-bg-img" src="images/menu-hero.jpg" alt="The Bubble Hub Melkbos staff and interior">
+  <div class="page-hero-overlay"></div>
   <span class="tag">The Full Menu</span>
   <h1>Everything We Serve</h1>
   <p>Bubble tea, hot drinks, cold treats, waffles, snacks and more — freshly made at The Bubble Hub Melkbos. Prices in ZAR.</p>
@@ -435,73 +418,6 @@
 <!-- HOT DRINKS -->
 <section class="menu-section" id="hot-drinks">
   <div class="menu-section-header"><span class="badge">☕ Hot Drinks</span><div class="line"></div></div>
-
-  <!-- SVG visual strip instead of external image -->
-  <div class="section-visual">
-    <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="hotBg" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#f8e8d4"/>
-          <stop offset="50%" stop-color="#f0d0b0"/>
-          <stop offset="100%" stop-color="#f8e8d4"/>
-        </linearGradient>
-      </defs>
-      <rect width="900" height="160" fill="url(#hotBg)"/>
-      <!-- Multiple coffee cups -->
-      <g transform="translate(80,20)">
-        <path d="M0 30 Q-2 110 50 115 Q102 110 100 30 Z" fill="white"/>
-        <ellipse cx="50" cy="30" rx="52" ry="10" fill="#e8d8c8"/>
-        <ellipse cx="50" cy="34" rx="40" ry="8" fill="#c68642"/>
-        <path d="M100 55 Q125 55 125 80 Q125 105 100 105" stroke="white" stroke-width="12" fill="none" stroke-linecap="round"/>
-        <!-- Latte art -->
-        <path d="M36 38 Q36 30 44 30 Q50 30 50 38 Q50 30 56 30 Q64 30 64 38 Q64 46 50 54 Q36 46 36 38 Z" fill="rgba(255,255,255,0.5)"/>
-        <!-- Steam -->
-        <path d="M30 22 Q27 12 30 2"  stroke="rgba(150,100,60,0.5)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <path d="M50 18 Q47 6 50 -4"  stroke="rgba(150,100,60,0.5)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <path d="M70 22 Q67 12 70 2"  stroke="rgba(150,100,60,0.5)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <!-- Saucer -->
-        <ellipse cx="50" cy="118" rx="60" ry="10" fill="#d4a96a"/>
-      </g>
-      <!-- Second cup -->
-      <g transform="translate(250,25)">
-        <path d="M0 25 Q-2 100 45 106 Q92 100 90 25 Z" fill="white"/>
-        <ellipse cx="45" cy="25" rx="46" ry="9" fill="#e8d8c8"/>
-        <ellipse cx="45" cy="29" rx="36" ry="7" fill="#8b5e2a"/>
-        <path d="M90 50 Q112 50 112 72 Q112 94 90 94" stroke="white" stroke-width="11" fill="none" stroke-linecap="round"/>
-        <path d="M27 24 Q24 14 27 4" stroke="rgba(150,100,60,0.4)" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <path d="M45 20 Q42 8 45 -2" stroke="rgba(150,100,60,0.4)" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <ellipse cx="45" cy="108" rx="54" ry="9" fill="#d4a96a"/>
-      </g>
-      <!-- Coffee beans -->
-      <g transform="translate(420,50)">
-        <ellipse cx="0" cy="0" rx="18" ry="11" fill="#7b4a1e" transform="rotate(-20 0 0)"/>
-        <line x1="0" y1="-10" x2="0" y2="10" stroke="#5a3010" stroke-width="2" transform="rotate(-20 0 0)"/>
-      </g>
-      <g transform="translate(480,80)">
-        <ellipse cx="0" cy="0" rx="16" ry="10" fill="#7b4a1e" transform="rotate(15 0 0)"/>
-        <line x1="0" y1="-9" x2="0" y2="9" stroke="#5a3010" stroke-width="2" transform="rotate(15 0 0)"/>
-      </g>
-      <!-- Steamer cup right side -->
-      <g transform="translate(600,15)">
-        <path d="M0 30 Q-2 115 55 120 Q112 115 110 30 Z" fill="white"/>
-        <ellipse cx="55" cy="30" rx="57" ry="11" fill="#e8d8c8"/>
-        <ellipse cx="55" cy="35" rx="44" ry="9" fill="#a6308a"/>
-        <ellipse cx="55" cy="30" rx="35" ry="10" fill="rgba(255,255,255,0.85)"/>
-        <ellipse cx="42" cy="22" rx="18" ry="9" fill="rgba(255,255,255,0.8)"/>
-        <ellipse cx="68" cy="22" rx="18" ry="9" fill="rgba(255,255,255,0.8)"/>
-        <path d="M110 55 Q136 55 136 82 Q136 109 110 109" stroke="white" stroke-width="12" fill="none" stroke-linecap="round"/>
-        <path d="M35 22 Q31 10 35 0"  stroke="rgba(150,100,60,0.4)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <path d="M55 18 Q51 4 55 -6"  stroke="rgba(150,100,60,0.4)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <path d="M75 22 Q71 10 75 0"  stroke="rgba(150,100,60,0.4)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <ellipse cx="55" cy="124" rx="65" ry="11" fill="#d4a96a"/>
-      </g>
-      <!-- Cinnamon dots -->
-      <circle cx="380" cy="130" r="3" fill="#8b5e2a" opacity="0.4"/>
-      <circle cx="395" cy="122" r="2.5" fill="#8b5e2a" opacity="0.35"/>
-      <circle cx="410" cy="136" r="3" fill="#8b5e2a" opacity="0.4"/>
-      <text x="450" y="152" font-family="Poppins,sans-serif" font-size="11" fill="#7b4a1e" text-anchor="middle" opacity="0.6">Freshly Brewed, Every Time ☕</text>
-    </svg>
-  </div>
 
   <div class="subcat reveal">
     <div class="subcat-title">
@@ -551,95 +467,6 @@
 <section class="menu-section" id="bubble-tea">
   <div class="menu-section-header"><span class="badge">🧋 Bubble Tea</span><div class="line"></div></div>
 
-  <div class="section-visual">
-    <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="btBg" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#fdeef7"/>
-          <stop offset="50%" stop-color="#f3d6ef"/>
-          <stop offset="100%" stop-color="#fdeef7"/>
-        </linearGradient>
-        <radialGradient id="cup1g" cx="35%" cy="25%" r="65%">
-          <stop offset="0%" stop-color="#ff9fd4"/>
-          <stop offset="100%" stop-color="#a6308a"/>
-        </radialGradient>
-        <radialGradient id="cup2g" cx="35%" cy="25%" r="65%">
-          <stop offset="0%" stop-color="#c0a0ff"/>
-          <stop offset="100%" stop-color="#7040b0"/>
-        </radialGradient>
-        <radialGradient id="cup3g" cx="35%" cy="25%" r="65%">
-          <stop offset="0%" stop-color="#80e8d0"/>
-          <stop offset="100%" stop-color="#06d6a0"/>
-        </radialGradient>
-      </defs>
-      <rect width="900" height="160" fill="url(#btBg)"/>
-      <!-- Cup 1 -->
-      <g transform="translate(80,10)">
-        <path d="M5 5 L15 148 L75 148 L85 5 Z" fill="url(#cup1g)"/>
-        <rect x="0" y="0" width="90" height="10" rx="5" fill="#ff6fb0"/>
-        <circle cx="25" cy="100" r="8" fill="#ffd166" opacity="0.85"/>
-        <circle cx="45" cy="85"  r="8" fill="#06d6a0" opacity="0.85"/>
-        <circle cx="62" cy="108" r="7" fill="#a0d0ff" opacity="0.85"/>
-        <circle cx="20" cy="122" r="7" fill="#7b1f66"/>
-        <circle cx="40" cy="130" r="7" fill="#5a1250"/>
-        <circle cx="60" cy="122" r="7" fill="#7b1f66"/>
-        <rect x="40" y="-28" width="6" height="34" rx="3" fill="rgba(255,255,255,0.7)"/>
-        <ellipse cx="45" cy="4" rx="30" ry="8" fill="rgba(255,255,255,0.85)"/>
-      </g>
-      <!-- Cup 2 -->
-      <g transform="translate(220,6)">
-        <path d="M5 5 L15 150 L80 150 L90 5 Z" fill="url(#cup2g)"/>
-        <rect x="0" y="0" width="95" height="10" rx="5" fill="#a6308a"/>
-        <circle cx="28" cy="95"  r="9" fill="#ff6fb0" opacity="0.9"/>
-        <circle cx="50" cy="78"  r="9" fill="#ffd166" opacity="0.9"/>
-        <circle cx="68" cy="108" r="8" fill="#06d6a0" opacity="0.9"/>
-        <circle cx="22" cy="120" r="8" fill="#7b1f66"/>
-        <circle cx="45" cy="130" r="8" fill="#5a1250"/>
-        <circle cx="68" cy="120" r="8" fill="#7b1f66"/>
-        <rect x="42" y="-34" width="6" height="40" rx="3" fill="rgba(255,255,255,0.75)"/>
-        <ellipse cx="48" cy="4" rx="33" ry="9" fill="rgba(255,255,255,0.85)"/>
-        <ellipse cx="33" cy="-4" rx="17" ry="8" fill="rgba(255,255,255,0.8)"/>
-        <ellipse cx="63" cy="-4" rx="17" ry="8" fill="rgba(255,255,255,0.8)"/>
-      </g>
-      <!-- Cup 3 -->
-      <g transform="translate(380,10)">
-        <path d="M5 5 L15 148 L75 148 L85 5 Z" fill="url(#cup3g)"/>
-        <rect x="0" y="0" width="90" height="10" rx="5" fill="#04b386"/>
-        <circle cx="26" cy="90"  r="8" fill="#ffd166" opacity="0.9"/>
-        <circle cx="48" cy="108" r="8" fill="#ff6fb0" opacity="0.9"/>
-        <circle cx="65" cy="82"  r="7" fill="#c084fc" opacity="0.9"/>
-        <circle cx="20" cy="122" r="7" fill="#5a1250"/>
-        <circle cx="42" cy="130" r="7" fill="#7b1f66"/>
-        <circle cx="62" cy="122" r="7" fill="#5a1250"/>
-        <rect x="40" y="-26" width="6" height="32" rx="3" fill="rgba(255,255,255,0.7)"/>
-        <ellipse cx="45" cy="4" rx="30" ry="8" fill="rgba(255,255,255,0.85)"/>
-      </g>
-      <!-- Cup 4 pink-orange -->
-      <g transform="translate(530,12)">
-        <path d="M5 5 L15 144 L72 144 L82 5 Z" fill="#ff9fd4"/>
-        <rect x="0" y="0" width="87" height="9" rx="4.5" fill="#ff6fb0"/>
-        <circle cx="24" cy="88"  r="7" fill="#ffd166" opacity="0.9"/>
-        <circle cx="44" cy="104" r="7" fill="#a0d0ff" opacity="0.9"/>
-        <circle cx="60" cy="80"  r="6" fill="#c084fc" opacity="0.9"/>
-        <circle cx="18" cy="118" r="7" fill="#7b1f66"/>
-        <circle cx="40" cy="126" r="7" fill="#5a1250"/>
-        <circle cx="60" cy="118" r="7" fill="#7b1f66"/>
-        <rect x="38" y="-24" width="5" height="30" rx="2.5" fill="rgba(255,255,255,0.7)"/>
-        <ellipse cx="43" cy="4" rx="28" ry="7" fill="rgba(255,255,255,0.85)"/>
-      </g>
-      <!-- Floating coloured bubbles between cups -->
-      <circle cx="170" cy="50"  r="12" fill="#ffd166" opacity="0.6"/>
-      <circle cx="160" cy="120" r="10" fill="#ff6fb0" opacity="0.5"/>
-      <circle cx="345" cy="40"  r="10" fill="#06d6a0" opacity="0.6"/>
-      <circle cx="510" cy="80"  r="11" fill="#c084fc" opacity="0.5"/>
-      <circle cx="690" cy="50"  r="13" fill="#ffd166" opacity="0.55"/>
-      <circle cx="720" cy="120" r="10" fill="#a0d0ff" opacity="0.5"/>
-      <circle cx="800" cy="70"  r="12" fill="#ff6fb0" opacity="0.5"/>
-      <circle cx="850" cy="130" r="9"  fill="#06d6a0" opacity="0.55"/>
-      <text x="450" y="154" font-family="Poppins,sans-serif" font-size="11" fill="#7b1f66" text-anchor="middle" opacity="0.65">Popping Bubbles · Your Way 🧋</text>
-    </svg>
-  </div>
-
   <div class="subcat reveal">
     <div class="subcat-title"><h3>Bubble Hub Select Teas</h3><span class="price-tag">R65</span></div>
     <div class="item-row"><span class="item-name">Mango Burst<span class="item-note">Mixed Berry Tea to sweeten the Sour Grape flavour and Mango Bubbles to wow your experience</span></span></div>
@@ -666,62 +493,6 @@
 <!-- COLD DRINKS -->
 <section class="menu-section" id="cold-drinks">
   <div class="menu-section-header"><span class="badge">🥤 Cold Drinks</span><div class="line"></div></div>
-
-  <div class="section-visual">
-    <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="coldBg" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#e0f7f4"/>
-          <stop offset="50%" stop-color="#d0f0ff"/>
-          <stop offset="100%" stop-color="#e0f7f4"/>
-        </linearGradient>
-      </defs>
-      <rect width="900" height="160" fill="url(#coldBg)"/>
-      <!-- Ice cubes scattered -->
-      <rect x="60"  y="60"  width="30" height="30" rx="6" fill="rgba(160,208,255,0.5)" transform="rotate(10 75 75)"/>
-      <rect x="100" y="40"  width="24" height="24" rx="5" fill="rgba(160,208,255,0.4)" transform="rotate(-8 112 52)"/>
-      <rect x="160" y="70"  width="28" height="28" rx="5" fill="rgba(160,208,255,0.45)" transform="rotate(15 174 84)"/>
-      <!-- Frappe cups -->
-      <g transform="translate(250,8)">
-        <path d="M5 8 L18 148 L82 148 L95 8 Z" fill="rgba(6,214,160,0.5)"/>
-        <rect x="0" y="2" width="100" height="12" rx="6" fill="#06d6a0"/>
-        <ellipse cx="50" cy="8" rx="50" ry="14" fill="rgba(255,255,255,0.8)"/>
-        <!-- Ice inside -->
-        <rect x="20" y="60" width="16" height="16" rx="3" fill="rgba(255,255,255,0.5)" transform="rotate(10 28 68)"/>
-        <rect x="45" y="50" width="14" height="14" rx="3" fill="rgba(255,255,255,0.5)" transform="rotate(-5 52 57)"/>
-        <rect x="62" y="70" width="14" height="14" rx="3" fill="rgba(255,255,255,0.45)" transform="rotate(8 69 77)"/>
-        <rect x="44" y="-26" width="6" height="34" rx="3" fill="rgba(255,255,255,0.8)"/>
-      </g>
-      <!-- Slushie -->
-      <g transform="translate(420,14)">
-        <path d="M5 5 L16 138 L74 138 L85 5 Z" fill="rgba(255,111,176,0.55)"/>
-        <rect x="0" y="0" width="90" height="10" rx="5" fill="#ff6fb0"/>
-        <rect x="38" y="-24" width="6" height="30" rx="3" fill="rgba(255,255,255,0.75)"/>
-        <ellipse cx="45" cy="5" rx="36" ry="9" fill="rgba(255,255,255,0.8)"/>
-        <circle cx="25" cy="70" r="8" fill="rgba(255,255,255,0.4)"/>
-        <circle cx="55" cy="85" r="7" fill="rgba(255,255,255,0.4)"/>
-      </g>
-      <!-- Can shapes -->
-      <g transform="translate(580,20)">
-        <rect x="0" y="0" width="50" height="120" rx="8" fill="rgba(255,50,50,0.6)"/>
-        <rect x="0" y="0" width="50" height="16" rx="8" fill="rgba(255,80,80,0.8)"/>
-        <rect x="0" y="104" width="50" height="16" rx="8" fill="rgba(200,30,30,0.7)"/>
-        <text x="25" y="65" font-family="sans-serif" font-size="9" fill="white" text-anchor="middle" font-weight="bold">COLA</text>
-      </g>
-      <g transform="translate(650,25)">
-        <rect x="0" y="0" width="46" height="110" rx="7" fill="rgba(0,180,100,0.6)"/>
-        <rect x="0" y="0" width="46" height="14" rx="7" fill="rgba(0,200,120,0.8)"/>
-        <rect x="0" y="96" width="46" height="14" rx="7" fill="rgba(0,140,80,0.7)"/>
-        <text x="23" y="58" font-family="sans-serif" font-size="7" fill="white" text-anchor="middle" font-weight="bold">WATER</text>
-      </g>
-      <!-- Water droplets -->
-      <circle cx="750" cy="50"  r="8" fill="rgba(160,208,255,0.6)"/>
-      <circle cx="780" cy="80"  r="6" fill="rgba(160,208,255,0.55)"/>
-      <circle cx="820" cy="55"  r="9" fill="rgba(160,208,255,0.5)"/>
-      <circle cx="860" cy="100" r="7" fill="rgba(160,208,255,0.6)"/>
-      <text x="450" y="154" font-family="Poppins,sans-serif" font-size="11" fill="#047c60" text-anchor="middle" opacity="0.65">Chilled · Refreshing · Delicious 🥤</text>
-    </svg>
-  </div>
 
   <div class="subcat reveal">
     <div class="subcat-title"><h3>Bubble Hub Crushers</h3><span class="price-tag">500ml — R60</span></div>
@@ -782,68 +553,6 @@
 <section class="menu-section" id="smoothies">
   <div class="menu-section-header"><span class="badge">🍹 Smoothies & Alcohol Drinks</span><div class="line"></div></div>
 
-  <div class="section-visual">
-    <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="smoothBg" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#fff0e0"/>
-          <stop offset="50%" stop-color="#ffe8f0"/>
-          <stop offset="100%" stop-color="#fff0e0"/>
-        </linearGradient>
-      </defs>
-      <rect width="900" height="160" fill="url(#smoothBg)"/>
-      <!-- Smoothie blender glass left -->
-      <g transform="translate(60,10)">
-        <path d="M10 10 L25 145 L95 145 L110 10 Z" fill="rgba(255,80,130,0.45)"/>
-        <rect x="5" y="4" width="110" height="12" rx="6" fill="#ff6fb0"/>
-        <circle cx="35" cy="80" r="12" fill="rgba(255,180,50,0.6)"/>
-        <circle cx="70" cy="65" r="10" fill="rgba(255,100,100,0.55)"/>
-        <circle cx="85" cy="95" r="11" fill="rgba(255,50,120,0.5)"/>
-        <rect x="55" y="-24" width="6" height="30" rx="3" fill="rgba(255,255,255,0.7)"/>
-        <ellipse cx="60" cy="8" rx="38" ry="10" fill="rgba(255,255,255,0.8)"/>
-      </g>
-      <!-- Fruit pieces scattered -->
-      <!-- Strawberry -->
-      <g transform="translate(220,40)">
-        <ellipse cx="0" cy="0" rx="18" ry="22" fill="#e03030"/>
-        <ellipse cx="0" cy="-18" rx="8" ry="6" fill="#4a7c30"/>
-        <circle cx="-5" cy="-5" r="2" fill="rgba(255,200,200,0.7)"/>
-        <circle cx="5"  cy="5"  r="2" fill="rgba(255,200,200,0.7)"/>
-        <circle cx="-2" cy="8"  r="2" fill="rgba(255,200,200,0.7)"/>
-      </g>
-      <!-- Banana -->
-      <g transform="translate(290,30)">
-        <path d="M0 0 Q20 -15 50 5 Q55 20 40 30 Q20 20 0 0 Z" fill="#ffd166"/>
-        <path d="M0 0 Q20 -12 50 5" stroke="#e8b800" stroke-width="2" fill="none"/>
-      </g>
-      <!-- Mango -->
-      <ellipse cx="410" cy="80" rx="28" ry="22" fill="#ffa040" transform="rotate(-15 410 80)"/>
-      <ellipse cx="408" cy="70" rx="12" ry="10" fill="rgba(255,200,100,0.6)" transform="rotate(-15 408 70)"/>
-      <!-- Mixed berry glass -->
-      <g transform="translate(500,8)">
-        <path d="M8 8 L20 148 L88 148 L100 8 Z" fill="rgba(100,50,180,0.45)"/>
-        <rect x="3" y="2" width="104" height="12" rx="6" fill="#9060d0"/>
-        <circle cx="30" cy="80" r="11" fill="rgba(80,0,160,0.5)"/>
-        <circle cx="65" cy="65" r="10" fill="rgba(120,60,200,0.5)"/>
-        <circle cx="78" cy="100" r="9"  fill="rgba(60,0,120,0.5)"/>
-        <rect x="50" y="-24" width="6" height="30" rx="3" fill="rgba(255,255,255,0.7)"/>
-        <ellipse cx="54" cy="7" rx="36" ry="9" fill="rgba(255,255,255,0.8)"/>
-      </g>
-      <!-- Passion fruit -->
-      <circle cx="680" cy="75" r="28" fill="#f5c542"/>
-      <circle cx="680" cy="75" r="20" fill="#e8a800"/>
-      <circle cx="680" cy="75" r="12" fill="#ffd166"/>
-      <!-- Protein shaker -->
-      <g transform="translate(760,15)">
-        <rect x="0" y="0" width="60" height="130" rx="10" fill="rgba(0,180,160,0.5)"/>
-        <rect x="0" y="0" width="60" height="18" rx="10" fill="rgba(0,200,180,0.7)"/>
-        <rect x="18" y="-10" width="24" height="16" rx="5" fill="rgba(0,160,140,0.7)"/>
-        <text x="30" y="75" font-family="sans-serif" font-size="9" fill="white" text-anchor="middle" font-weight="bold">PROTEIN</text>
-      </g>
-      <text x="450" y="154" font-family="Poppins,sans-serif" font-size="11" fill="#7b1f66" text-anchor="middle" opacity="0.65">Real Fruit · Real Good 🍹</text>
-    </svg>
-  </div>
-
   <div class="subcat reveal">
     <div class="subcat-title"><h3>Fruit Coulis Smoothies</h3><span class="price-tag">500ml — R50</span></div>
     <p class="subcat-desc">With milk and ice-cream in the mix — your favourite flavour fruit blended with yoghurt and ice.</p>
@@ -879,70 +588,6 @@
 <section class="menu-section" id="waffles">
   <div class="menu-section-header"><span class="badge">🧇 Waffles</span><div class="line"></div></div>
 
-  <div class="section-visual">
-    <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="waffleBg" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#fff8e0"/>
-          <stop offset="50%" stop-color="#fef0c0"/>
-          <stop offset="100%" stop-color="#fff8e0"/>
-        </linearGradient>
-      </defs>
-      <rect width="900" height="160" fill="url(#waffleBg)"/>
-      <!-- Big waffle centre -->
-      <g transform="translate(300,20)">
-        <rect x="0" y="0" width="300" height="120" rx="16" fill="#f5a623"/>
-        <rect x="8" y="8" width="284" height="104" rx="12" fill="#ffd166"/>
-        <!-- Grid -->
-        <line x1="8" y1="34" x2="292" y2="34" stroke="#f5a623" stroke-width="2.5"/>
-        <line x1="8" y1="60" x2="292" y2="60" stroke="#f5a623" stroke-width="2.5"/>
-        <line x1="8" y1="86" x2="292" y2="86" stroke="#f5a623" stroke-width="2.5"/>
-        <line x1="58"  y1="8" x2="58"  y2="112" stroke="#f5a623" stroke-width="2.5"/>
-        <line x1="108" y1="8" x2="108" y2="112" stroke="#f5a623" stroke-width="2.5"/>
-        <line x1="158" y1="8" x2="158" y2="112" stroke="#f5a623" stroke-width="2.5"/>
-        <line x1="208" y1="8" x2="208" y2="112" stroke="#f5a623" stroke-width="2.5"/>
-        <line x1="258" y1="8" x2="258" y2="112" stroke="#f5a623" stroke-width="2.5"/>
-        <!-- Strawberries on top -->
-        <ellipse cx="40"  cy="8" rx="16" ry="12" fill="#e03030"/>
-        <ellipse cx="80"  cy="4" rx="16" ry="12" fill="#e84040"/>
-        <ellipse cx="120" cy="8" rx="15" ry="11" fill="#e03030"/>
-        <ellipse cx="160" cy="4" rx="16" ry="12" fill="#e84040"/>
-        <ellipse cx="200" cy="8" rx="14" ry="11" fill="#e03030"/>
-        <ellipse cx="240" cy="4" rx="16" ry="12" fill="#e84040"/>
-        <ellipse cx="280" cy="8" rx="14" ry="11" fill="#e03030"/>
-        <!-- Cream on top -->
-        <ellipse cx="150" cy="2" rx="120" ry="18" fill="rgba(255,255,255,0.88)"/>
-        <!-- Maple syrup drizzle -->
-        <path d="M60 60 Q80 80 100 60 Q120 40 140 70" stroke="#c87800" stroke-width="3" fill="none" opacity="0.5" stroke-linecap="round"/>
-        <!-- Icing sugar -->
-        <circle cx="30"  cy="40"  r="2.5" fill="rgba(255,255,255,0.7)"/>
-        <circle cx="200" cy="55"  r="2"   fill="rgba(255,255,255,0.7)"/>
-        <circle cx="270" cy="90"  r="2.5" fill="rgba(255,255,255,0.7)"/>
-        <circle cx="100" cy="100" r="2"   fill="rgba(255,255,255,0.7)"/>
-      </g>
-      <!-- Small waffle left -->
-      <g transform="translate(60,30)">
-        <rect x="0" y="0" width="120" height="100" rx="12" fill="#f5a623"/>
-        <rect x="6" y="6" width="108" height="88" rx="9" fill="#ffd166"/>
-        <line x1="6" y1="30" x2="114" y2="30" stroke="#f5a623" stroke-width="2"/>
-        <line x1="6" y1="55" x2="114" y2="55" stroke="#f5a623" stroke-width="2"/>
-        <line x1="6" y1="80" x2="114" y2="80" stroke="#f5a623" stroke-width="2"/>
-        <line x1="34" y1="6" x2="34" y2="94" stroke="#f5a623" stroke-width="2"/>
-        <line x1="63" y1="6" x2="63" y2="94" stroke="#f5a623" stroke-width="2"/>
-        <line x1="92" y1="6" x2="92" y2="94" stroke="#f5a623" stroke-width="2"/>
-        <ellipse cx="60" cy="4" rx="50" ry="11" fill="rgba(255,255,255,0.8)"/>
-      </g>
-      <!-- Honey drizzle right -->
-      <g transform="translate(760,20)">
-        <rect x="0" y="0" width="50" height="100" rx="14" fill="rgba(255,180,0,0.3)"/>
-        <path d="M25 100 Q20 120 25 130" stroke="#f5a623" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <circle cx="25" cy="134" r="6" fill="#f5a623" opacity="0.7"/>
-        <text x="25" y="60" font-family="sans-serif" font-size="9" fill="#c87800" text-anchor="middle" font-weight="bold">HONEY</text>
-      </g>
-      <text x="450" y="154" font-family="Poppins,sans-serif" font-size="11" fill="#8b5e00" text-anchor="middle" opacity="0.65">Crispy Outside · Fluffy Inside 🧇</text>
-    </svg>
-  </div>
-
   <div class="subcat reveal">
     <div class="subcat-title"><h3>The Bubble Waffle</h3><span class="price-tag">T/A R54 · Plate R64</span></div>
     <p class="subcat-desc">The Bubble Waffle with Bar-One spread and your choice of Vanilla, Chocolate, Strawberry or Mixed Soft Serve, 3 toppings of your choice, topped with Caramel, Chocolate or Strawberry Syrup.</p>
@@ -972,78 +617,6 @@
 <!-- BUBBLE SNACKS -->
 <section class="menu-section" id="snacks">
   <div class="menu-section-header"><span class="badge">🍗 Bubble Snacks</span><div class="line"></div></div>
-
-  <div class="section-visual">
-    <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="snackBg" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#fff4e0"/>
-          <stop offset="50%" stop-color="#ffeac0"/>
-          <stop offset="100%" stop-color="#fff4e0"/>
-        </linearGradient>
-      </defs>
-      <rect width="900" height="160" fill="url(#snackBg)"/>
-      <!-- Chicken pops basket left -->
-      <g transform="translate(60,20)">
-        <rect x="0" y="60" width="130" height="80" rx="8" fill="#d4a020" opacity="0.6"/>
-        <!-- Chicken pieces -->
-        <ellipse cx="30"  cy="52" rx="26" ry="20" fill="#f5a623"/>
-        <ellipse cx="65"  cy="44" rx="28" ry="22" fill="#e8941a"/>
-        <ellipse cx="100" cy="52" rx="26" ry="20" fill="#f5a623"/>
-        <ellipse cx="48"  cy="35" rx="24" ry="18" fill="#ffa820"/>
-        <ellipse cx="82"  cy="30" rx="24" ry="18" fill="#f5a623"/>
-        <!-- Crispy texture dots -->
-        <circle cx="30" cy="52" r="3" fill="rgba(200,100,0,0.3)"/>
-        <circle cx="65" cy="44" r="3" fill="rgba(200,100,0,0.3)"/>
-        <circle cx="100" cy="52" r="3" fill="rgba(200,100,0,0.3)"/>
-      </g>
-      <!-- Sauce cup -->
-      <g transform="translate(240,60)">
-        <path d="M5 5 L10 70 L60 70 L65 5 Z" fill="rgba(255,180,0,0.6)"/>
-        <rect x="0" y="0" width="70" height="10" rx="5" fill="#f5a623"/>
-        <text x="35" y="45" font-family="sans-serif" font-size="8" fill="#8b4000" text-anchor="middle" font-weight="bold">HONEY MUSTARD</text>
-      </g>
-      <!-- Toast/sandwich -->
-      <g transform="translate(380,20)">
-        <rect x="0" y="0"  width="160" height="120" rx="12" fill="#f5d898"/>
-        <rect x="8" y="8"  width="144" height="104" rx="8" fill="#fdebc0"/>
-        <!-- Filling layers -->
-        <rect x="8" y="44" width="144" height="16" rx="4" fill="rgba(255,100,50,0.5)"/>
-        <rect x="8" y="60" width="144" height="16" rx="4" fill="rgba(255,200,100,0.5)"/>
-        <rect x="8" y="76" width="144" height="16" rx="4" fill="rgba(200,100,200,0.3)"/>
-        <!-- Top bread -->
-        <rect x="0" y="0"   width="160" height="30" rx="12" fill="#f5d898"/>
-        <rect x="0" y="90"  width="160" height="30" rx="12" fill="#f5d898"/>
-        <!-- Sesame seeds -->
-        <ellipse cx="40"  cy="10" rx="5" ry="3" fill="rgba(255,255,255,0.6)" transform="rotate(-20 40 10)"/>
-        <ellipse cx="80"  cy="8"  rx="5" ry="3" fill="rgba(255,255,255,0.6)" transform="rotate(10 80 8)"/>
-        <ellipse cx="120" cy="12" rx="5" ry="3" fill="rgba(255,255,255,0.6)" transform="rotate(-10 120 12)"/>
-      </g>
-      <!-- Chips -->
-      <g transform="translate(610,30)">
-        <rect x="20" y="0"   width="100" height="130" rx="10" fill="rgba(255,220,100,0.5)"/>
-        <rect x="15" y="-5"  width="110" height="20"  rx="10" fill="rgba(255,200,50,0.7)"/>
-        <!-- Chip lines -->
-        <line x1="30" y1="30" x2="110" y2="30" stroke="rgba(200,140,0,0.3)" stroke-width="1.5"/>
-        <line x1="30" y1="50" x2="110" y2="50" stroke="rgba(200,140,0,0.3)" stroke-width="1.5"/>
-        <line x1="30" y1="70" x2="110" y2="70" stroke="rgba(200,140,0,0.3)" stroke-width="1.5"/>
-        <line x1="30" y1="90" x2="110" y2="90" stroke="rgba(200,140,0,0.3)" stroke-width="1.5"/>
-        <line x1="30" y1="110" x2="110" y2="110" stroke="rgba(200,140,0,0.3)" stroke-width="1.5"/>
-        <text x="70" y="75" font-family="sans-serif" font-size="10" fill="#8b6000" text-anchor="middle" font-weight="bold">CHIPS</text>
-      </g>
-      <!-- Popcorn -->
-      <g transform="translate(790,20)">
-        <path d="M10 80 L0 140 L80 140 L70 80 Z" fill="rgba(255,200,50,0.5)"/>
-        <circle cx="25" cy="70" r="14" fill="#ffd166"/>
-        <circle cx="50" cy="60" r="16" fill="#ffe080"/>
-        <circle cx="70" cy="72" r="14" fill="#ffd166"/>
-        <circle cx="35" cy="52" r="13" fill="#ffe080"/>
-        <circle cx="60" cy="48" r="13" fill="#ffd166"/>
-        <circle cx="15" cy="62" r="12" fill="#ffe080"/>
-      </g>
-      <text x="450" y="154" font-family="Poppins,sans-serif" font-size="11" fill="#8b4000" text-anchor="middle" opacity="0.65">Crispy Bites · Loaded Toasties 🍗</text>
-    </svg>
-  </div>
 
   <div class="subcat reveal">
     <div class="subcat-title"><h3>Chicken Pops</h3></div>
@@ -1087,79 +660,6 @@
 <!-- ICE CREAM & MILKSHAKES -->
 <section class="menu-section" id="icecream">
   <div class="menu-section-header"><span class="badge">🍦 Ice Cream & Milkshakes</span><div class="line"></div></div>
-
-  <div class="section-visual">
-    <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="iceBg2" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#fdeef7"/>
-          <stop offset="50%" stop-color="#ffe4f5"/>
-          <stop offset="100%" stop-color="#fdeef7"/>
-        </linearGradient>
-      </defs>
-      <rect width="900" height="160" fill="url(#iceBg2)"/>
-      <!-- Ice cream cone left -->
-      <g transform="translate(60,10)">
-        <path d="M65 120 L30 210 L100 210 Z" fill="#f5a623"/>
-        <line x1="65" y1="120" x2="50" y2="165" stroke="#e8941a" stroke-width="1.5"/>
-        <line x1="65" y1="120" x2="80" y2="165" stroke="#e8941a" stroke-width="1.5"/>
-        <line x1="38" y1="150" x2="92" y2="150" stroke="#e8941a" stroke-width="1.5"/>
-        <!-- Scoops -->
-        <circle cx="42" cy="100" r="34" fill="#ff9fd4"/>
-        <circle cx="82" cy="92"  r="34" fill="#c084fc"/>
-        <circle cx="62" cy="66"  r="32" fill="#ffd166"/>
-        <!-- Highlights -->
-        <circle cx="32" cy="84" r="9" fill="rgba(255,255,255,0.4)"/>
-        <circle cx="72" cy="76" r="9" fill="rgba(255,255,255,0.35)"/>
-        <circle cx="55" cy="54" r="8" fill="rgba(255,255,255,0.4)"/>
-        <!-- Cherry -->
-        <circle cx="62" cy="36" r="9" fill="#e03030"/>
-        <line x1="62" y1="27" x2="67" y2="18" stroke="#4a7c30" stroke-width="2"/>
-      </g>
-      <!-- Milkshake glass centre -->
-      <g transform="translate(250,8)">
-        <path d="M10 12 L22 148 L108 148 L120 12 Z" fill="rgba(255,111,176,0.5)"/>
-        <rect x="4" y="5" width="122" height="14" rx="7" fill="#ff6fb0"/>
-        <!-- Cream top -->
-        <ellipse cx="65" cy="12" rx="54" ry="16" fill="rgba(255,255,255,0.9)"/>
-        <ellipse cx="48" cy="3"  rx="26" ry="14" fill="rgba(255,255,255,0.85)"/>
-        <ellipse cx="82" cy="3"  rx="26" ry="14" fill="rgba(255,255,255,0.85)"/>
-        <!-- Cherry on cream -->
-        <circle cx="65" cy="-10" r="9" fill="#e03030"/>
-        <!-- Straw -->
-        <rect x="58" y="-36" width="7" height="52" rx="3.5" fill="rgba(255,80,130,0.8)"/>
-        <!-- Milkshake contents -->
-        <circle cx="35" cy="80"  r="9"  fill="rgba(255,200,50,0.5)"/>
-        <circle cx="65" cy="65"  r="10" fill="rgba(255,150,50,0.5)"/>
-        <circle cx="90" cy="90"  r="8"  fill="rgba(200,80,200,0.4)"/>
-      </g>
-      <!-- Gelato cups right -->
-      <g transform="translate(470,20)">
-        <!-- Cup 1 -->
-        <path d="M5 5 L15 120 L65 120 L75 5 Z" fill="rgba(255,209,102,0.6)"/>
-        <rect x="0" y="0" width="80" height="10" rx="5" fill="#ffd166"/>
-        <ellipse cx="40" cy="5" rx="40" ry="12" fill="rgba(255,255,255,0.8)"/>
-        <circle cx="20" cy="70" r="8" fill="#ff6fb0" opacity="0.7"/>
-        <circle cx="55" cy="80" r="7" fill="#c084fc" opacity="0.7"/>
-      </g>
-      <g transform="translate(580,25)">
-        <!-- Cup 2 -->
-        <path d="M5 5 L14 110 L62 110 L71 5 Z" fill="rgba(192,132,252,0.6)"/>
-        <rect x="0" y="0" width="76" height="10" rx="5" fill="#c084fc"/>
-        <ellipse cx="38" cy="5" rx="38" ry="11" fill="rgba(255,255,255,0.8)"/>
-        <circle cx="20" cy="65" r="8" fill="#ffd166" opacity="0.7"/>
-        <circle cx="50" cy="75" r="7" fill="#ff6fb0" opacity="0.7"/>
-      </g>
-      <!-- Sprinkles scattered -->
-      <rect x="180" y="50"  width="10" height="3" rx="1.5" fill="#ff6fb0" transform="rotate(30 185 51)"/>
-      <rect x="200" y="110" width="10" height="3" rx="1.5" fill="#ffd166" transform="rotate(-20 205 111)"/>
-      <rect x="700" y="60"  width="10" height="3" rx="1.5" fill="#06d6a0" transform="rotate(10 705 61)"/>
-      <rect x="750" y="120" width="10" height="3" rx="1.5" fill="#c084fc" transform="rotate(-35 755 121)"/>
-      <rect x="820" y="50"  width="10" height="3" rx="1.5" fill="#ff6fb0" transform="rotate(20 825 51)"/>
-      <rect x="840" y="100" width="10" height="3" rx="1.5" fill="#ffd166" transform="rotate(-15 845 101)"/>
-      <text x="450" y="154" font-family="Poppins,sans-serif" font-size="11" fill="#7b1f66" text-anchor="middle" opacity="0.65">Creamy Scoops · Thick Shakes 🍦</text>
-    </svg>
-  </div>
 
   <div class="subcat reveal">
     <div class="subcat-title"><h3>Soft Serve</h3></div>
